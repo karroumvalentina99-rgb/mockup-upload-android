@@ -31,6 +31,15 @@ object Uploader {
         filename: String,
         sourceUrl: String
     ): UploadResult {
+        // Require the non-secret defaults to be overridden in Settings first, so
+        // nothing uploads under an empty/borrowed author or without a token.
+        if (Prefs.token(ctx).isEmpty() || Prefs.author(ctx).isEmpty()) {
+            return UploadResult(
+                false, null,
+                "Set the API token and Author email in Settings first."
+            )
+        }
+
         val url = Prefs.baseUrl(ctx) + "/mockup-upload/upload"
         val b64 = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
 
@@ -39,7 +48,9 @@ object Uploader {
             put("image", b64)
             put("source_url", sourceUrl)
             put("author", Prefs.author(ctx))
-            put("keep_original", false)
+            // Keep the full-resolution screenshot; false makes the server downscale
+            // to a 750px palette-mode PNG, which defeats "straight to preview".
+            put("keep_original", true)
         }.toString()
 
         val builder = Request.Builder()
