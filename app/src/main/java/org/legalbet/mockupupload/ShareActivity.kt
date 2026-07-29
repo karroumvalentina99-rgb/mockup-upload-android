@@ -73,6 +73,15 @@ class ShareActivity : AppCompatActivity() {
         btnCancel.setOnClickListener { finish() }
 
         btnUpload.setOnClickListener {
+            if (!Prefs.isConfigured(this)) {
+                Toast.makeText(
+                    this,
+                    "Set the API token and Author email in Settings first.",
+                    Toast.LENGTH_LONG
+                ).show()
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return@setOnClickListener
+            }
             val base = filename.text?.toString()?.trim().orEmpty()
             val src = sourceUrl.text?.toString()?.trim().orEmpty()
             setBusy(true, btnUpload, btnCancel, progress, status)
