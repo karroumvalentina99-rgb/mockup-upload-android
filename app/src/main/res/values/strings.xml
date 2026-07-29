@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Mockup Upload</string>
+    <string name="share_label">Mockup Upload</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="how_to_title">Mockup Upload</string>
+    <string name="how_to_body">Take a screenshot on your phone, then tap Share and choose “Mockup Upload”. The image is sent straight to your Mockup Studio gallery.\n\nUse “Test connection” below to confirm the server settings work.</string>
+
+    <string name="btn_test">Test connection</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_upload">Upload</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+
+    <string name="hint_base_url">Server base URL</string>
+    <string name="hint_token">API token (Bearer)</string>
+    <string name="hint_author">Author email</string>
+    <string name="hint_cf_id">Cloudflare Access Client Id (optional)</string>
+    <string name="hint_cf_secret">Cloudflare Access Client Secret (optional)</string>
+    <string name="hint_filename">File name</string>
+    <string name="hint_source_url">Source URL (optional)</string>
+
+    <string name="cf_help">If the server sits behind Cloudflare Access, create a service token in Zero Trust and paste its Client Id / Secret here.</string>
+</resources>
