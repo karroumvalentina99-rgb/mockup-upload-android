@@ -11,6 +11,8 @@ import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
 
+    private var promptedForSettings = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,8 +53,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val status = findViewById<TextView>(R.id.status)
-        if (Prefs.baseUrl(this).isEmpty() || Prefs.token(this).isEmpty()) {
-            status.text = "Set the server URL and token in Settings."
+        if (!Prefs.isConfigured(this)) {
+            status.text = "Set the API token and Author email in Settings."
+            // On first launch, drop straight into Settings so nothing uploads
+            // without a token / author.
+            if (!promptedForSettings) {
+                promptedForSettings = true
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+        } else {
+            status.text = ""
         }
     }
 }
