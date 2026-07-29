@@ -12,9 +12,13 @@ object Prefs {
     private const val KEY_CF_ID = "cf_client_id"
     private const val KEY_CF_SECRET = "cf_client_secret"
 
+    // Base URL is not a secret, so it can ship as a default.
     const val DEFAULT_BASE_URL = "https://img.lbtools.org"
-    const val DEFAULT_TOKEN = "mk_2026_LBtools_xK9mPq4vR7wJ"
-    const val DEFAULT_AUTHOR = "seocontent@legalbet.com"
+    // No secrets baked into the app — token and author are entered in Settings and
+    // live only in SharedPreferences on the device (any string in an APK is trivially
+    // extractable with `strings`, so defaults here would leak).
+    const val DEFAULT_TOKEN = ""
+    const val DEFAULT_AUTHOR = ""
 
     private fun sp(c: Context) = c.getSharedPreferences(FILE, Context.MODE_PRIVATE)
 
@@ -28,6 +32,10 @@ object Prefs {
     fun cfId(c: Context): String = sp(c).getString(KEY_CF_ID, "")!!.trim()
 
     fun cfSecret(c: Context): String = sp(c).getString(KEY_CF_SECRET, "")!!.trim()
+
+    /** True once the required fields (token + author) are filled in. */
+    fun isConfigured(c: Context): Boolean =
+        token(c).isNotEmpty() && author(c).isNotEmpty()
 
     fun save(
         c: Context,
